@@ -16,9 +16,9 @@ public class ExampleRoute extends RouteBuilder {
         from("timer:producer?period={{timer.period}}")
             .routeId("sendMessageToArtemis")
             .transform().method("myBean", "saySomething")
-            .to("jms:queue:{{spring.artemis.test.queue}}");
+            .to("jms:queue:{{test.queue}}");
 
-        from("jms:queue:{{spring.artemis.test.queue}}")
+        from("jms:queue:{{test.queue}}")
             .routeId("consumeMessageFromArtemis")
             .log("${body}");
     }

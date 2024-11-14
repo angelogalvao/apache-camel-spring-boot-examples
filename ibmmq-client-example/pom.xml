@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>io.github.angelogalvao.example.csb</groupId>
+	<artifactId>ibmmq-client-example</artifactId>
+	<version>1.0.0</version>
+
+	<name>IBM MQ Camel Client Example Application</name>
+	<description>This is an example application in how to connect to IBM MQ using Camel on Spring Boot.</description>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.redhat.camel.springboot.platform</groupId>
+				<artifactId>camel-spring-boot-bom</artifactId>
+				<version>4.4.0.redhat-00037</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<maven.compiler.release>17</maven.compiler.release>
+		<spring.boot-version>3.2.10</spring.boot-version>
+		<surefire.plugin.version>3.0.0-M4</surefire.plugin.version>
+		<jkube.generator.from>registry.access.redhat.com/ubi8/openjdk-17:latest</jkube.generator.from>
+	</properties>
+
+	<dependencies>
+		<!-- Spring Boot -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-undertow</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<!-- Logs -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Dekorate -->
+		<dependency>
+			<groupId>io.dekorate</groupId>
+			<artifactId>openshift-spring-starter</artifactId>
+			<version>2.11.5.redhat-00017</version>
+		</dependency>
+
+		<!-- Camel -->
+		<dependency>
+			<groupId>org.apache.camel.springboot</groupId>
+			<artifactId>camel-jms-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel.springboot</groupId>
+			<artifactId>camel-spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel.springboot</groupId>
+			<artifactId>camel-stream-starter</artifactId>
+		</dependency>
+
+		<!-- JMS -->
+		<dependency>
+			<groupId>org.messaginghub</groupId>
+			<artifactId>pooled-jms</artifactId>
+		  	<version>3.1.7</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.ibm.mq</groupId>
+			<artifactId>com.ibm.mq.jakarta.client</artifactId>
+			<version>9.4.1.0</version>
+		  </dependency>
+
+		<!-- Test -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-test-spring-junit5</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${spring.boot-version}</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${surefire.plugin.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>com.redhat.camel.springboot.platform</groupId>
+				<artifactId>patch-maven-plugin</artifactId>
+				<version>4.4.0.redhat-00037</version>
+				<extensions>true</extensions>
+				<configuration>
+					<skip>false</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>openshift</id>
+			<build>
+				<defaultGoal>install</defaultGoal>
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.jkube</groupId>
+						<artifactId>openshift-maven-plugin</artifactId>
+						<version>1.16.2.redhat-00027</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>resource</goal>
+									<goal>build</goal>
+									<goal>apply</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+</project>

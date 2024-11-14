@@ -1,0 +1,37 @@
+## Find the correct license value by version at https://www.ibm.com/docs/en/ibm-mq/9.4?topic=reference-licensing-api-references-mq-operator.
+apiVersion: mq.ibm.com/v1beta1
+kind: QueueManager
+metadata:
+  name: qm-dev
+spec:
+  license:
+    accept: true
+    license: L-CLXQ-ADXTK3
+    use: Development
+  web:
+    enabled: true
+  template:
+    pod:
+      containers:
+        - env:
+            - name: MQ_DEV
+              value: "true"
+            - name: MQ_CONNAUTH_USE_HTP
+              value: "true"
+            - name: MQ_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: my-mq-dev-passwords
+                  key: dev-admin-password
+            - name: MQ_APP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: my-mq-dev-passwords
+                  key: dev-app-password
+          name: qmgr
+  queueManager:
+    storage:
+      queueManager:
+        type: persistent-claim
+    name: QUICKSTART
+  version: 9.4.1.0-r1

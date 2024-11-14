@@ -7,7 +7,7 @@ More details [here](https://github.com/ibm-messaging/mq-jms-spring).
 
 ## Deploy the application
 
-### Deploy IBM MQ Artemis in Openshift
+### Deploy IBM MQ in Openshift
 
 1. Create the project
 ```bash

@@ -2,7 +2,8 @@
 
 ## Description
 
-This is an example application that uses Camel on Spring Boot runtime to connect to a IBM MQ broker running on Openshift. 
+This is an example application that uses Camel on Spring Boot runtime to connect to a IBM MQ broker running on Openshift.
+More details [here](https://github.com/ibm-messaging/mq-jms-spring).
 
 ## Deploy the application
 
@@ -15,7 +16,7 @@ oc new-project ibmmq-camel-spring-boot-project
 
 2. Install IBM Catalog. 
 ```bash
-oc create -f src/main/openshifft/001-catalog.yaml
+oc create -f src/main/openshift/001-catalog.yaml
 ```
 
 3. Install IBM MQ operator

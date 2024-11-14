@@ -63,5 +63,5 @@ oc secrets link --for=pull default docker-registry
 2. Deploy the application on Openshift:
 
 ```bash
-./mvnw clean install -DSkipTests -Ddekorate.deploy=true
+./mvnw clean install -DskipTests -Ddekorate.deploy=true
 ```

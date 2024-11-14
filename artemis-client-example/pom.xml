@@ -9,7 +9,7 @@
   <packaging>jar</packaging>
   <version>1.0.0</version>
 
-  <name>A Camel Spring Boot Route</name>
+  <name>Artemis Camel Client Example Application</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
